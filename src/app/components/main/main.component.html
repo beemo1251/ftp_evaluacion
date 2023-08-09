@@ -1,0 +1,64 @@
+<div class="content_main">
+  <div class="nav_main">
+    <!-- <button type="button" class="btn_csv"><i class="bi bi-file-earmark-arrow-up-fill"></i> Import</button> -->
+    <input type="file" #event (change)="actionFile(event)" class="file-select">
+    <!-- <button type="button" class="btn_csv"><i class="bi bi-file-earmark-arrow-down-fill"></i> Export</button> -->
+  </div>
+  <div class="body_main">
+    <div class="table_main">
+      <div class="table_head">
+        <div class="table_title">
+          <span class="title_1">Código único de transferencia</span>
+          <span class="title_2">Fecha</span>
+          <span class="title_3">Descripción</span>
+          <span class="title_4">Monto</span>
+          <span class="title_5"></span>
+        </div>
+      </div>
+      <div class="table_item">
+        <div class="item" *ngFor="let mov of movimientos">
+          <span class="item_1">{{mov.codigo_unico}}</span>
+          <span class="item_2">{{mov.fecha}}</span>
+          <span class="item_3">{{mov.descripcion}}</span>
+          <span class="item_4">{{mov.monto | currency : "PEN" }}</span>
+          <span class="item_5">
+            <div class="item_action">
+              <button type="button" class="btn_action" (click)="open(content, mov.codigo_unico)"><i class="bi bi-pencil"></i></button>
+              <button type="button" class="btn_action" (click)="trash(mov.codigo_unico)"><i class="bi bi-trash3"></i></button>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <form (ngSubmit)="save()" #forma="ngForm">
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+			<div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Código único de transferencia</label>
+        <input type="text" class="form-control" id="" name="codigo_unico" [(ngModel)]="movimiento.codigo_unico">
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Fecha</label>
+        <input type="text" class="form-control" id="" name="fecha" [(ngModel)]="movimiento.fecha">
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Descripción</label>
+        <input type="text" class="form-control" id="" name="descripcion" [(ngModel)]="movimiento.descripcion">
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Monto</label>
+        <input type="text" class="form-control" id="" name="monto" [(ngModel)]="movimiento.monto">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-outline-dark" (click)="modal.dismiss('Cross click')">Save</button>
+    </div>
+  </form>
+</ng-template>
